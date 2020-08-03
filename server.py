@@ -6,20 +6,25 @@ app = Flask(__name__)
 
 @app.before_request
 def before_request():
-   db.connect()
+    db.connect()
 
 @app.after_request
 def after_request(response):
-   db.close()
-   return response
+    db.close()
+    return response
 
 @app.cli.command() # new
 def migrate(): # new 
-   db.evolve(ignore_tables={'base_model'}) # new
+    db.evolve(ignore_tables={'base_model'}) # new
 
 @app.route("/")
 def index():
-   return render_template('index.html')
+    store_name = request.args.get('store_name')
+    return render_template('index.html', store_name=store_name)
+
+@app.route("/store")
+def store():
+    return render_template('store.html')
 
 if __name__ == '__main__':
-   app.run()
+    app.run(debug = True)

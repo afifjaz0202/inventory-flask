@@ -1,4 +1,9 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1>Homepage</h1>
+<h1>Name Your Store</h1>
+<a href="{{ url_for('store') }}" class="btn">Register Your Store</a>
+
+{% if store_name %}
+    <h2>Your store's name is "{{store_name}}"</h2>
+{% endif %}
 {% endblock %}
