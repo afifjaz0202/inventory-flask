@@ -1,6 +1,6 @@
 import peeweedbevolve # new; must be imported before models
 from flask import Flask, render_template, request
-from models import db
+from models import db, Store
 
 app = Flask(__name__)
 
@@ -19,8 +19,12 @@ def migrate(): # new
 
 @app.route("/")
 def index():
+    # with this code, your need to directly type in /store
     store_name = request.args.get('store_name')
-    return render_template('index.html', store_name=store_name)
+    print(store_name)
+    newstore = Store(name = store_name)
+    newstore.save()
+    return render_template('index.html', store_name = store_name)
 
 @app.route("/store")
 def store():
